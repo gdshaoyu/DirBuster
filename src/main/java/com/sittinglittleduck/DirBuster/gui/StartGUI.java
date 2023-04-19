@@ -24,44 +24,38 @@ package com.sittinglittleduck.DirBuster.gui;
 import com.jgoodies.looks.Options;
 import com.jgoodies.looks.plastic.PlasticXPLookAndFeel;
 import com.jgoodies.looks.plastic.theme.Silver;
-import com.sittinglittleduck.DirBuster.*;
-
-import java.net.MalformedURLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.help.HelpSetException;
-import javax.swing.JOptionPane;
+import com.sittinglittleduck.DirBuster.Config;
+import com.sittinglittleduck.DirBuster.ImageCreator;
+import com.sittinglittleduck.DirBuster.Manager;
 import edu.stanford.ejalbert.BrowserLauncher;
-import java.awt.Dimension;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.net.URL;
-import java.util.Vector;
+
 import javax.help.CSH;
 import javax.help.HelpBroker;
 import javax.help.HelpSet;
-import javax.swing.ButtonGroup;
-import javax.swing.JRadioButtonMenuItem;
-import javax.swing.LookAndFeel;
-import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
+import javax.help.HelpSetException;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-public class StartGUI extends javax.swing.JFrame
-{
+public class StartGUI extends javax.swing.JFrame {
 
     Manager manager = null;
     HelpSet hs;
     HelpBroker hb;
 
-    /** Creates new form StartGUI */
-    public StartGUI()
-    {
-        try
-        {
-            
-            
-            
+    /**
+     * Creates new form StartGUI
+     */
+    public StartGUI() {
+        try {
+
+
             System.out.println("Starting OWASP DirBuster " + Config.version);
 
             /*
@@ -75,32 +69,26 @@ public class StartGUI extends javax.swing.JFrame
             UIManager.setLookAndFeel(Options.PLASTICXP_NAME);
 
 
-
-
             initComponents();
-            
+
             /*
              * Detect if the OS is vista, as we need to rsize the gui, as the buttons are not visable
+             * 新版windows需要调整窗口尺寸，否则按钮需要拉伸后才可见
              */
             String os = System.getProperty("os.name");
-            
-            
-            if(os.contains("Vista"))
-            {
-                
+            if (os.contains("Vista") || os.contains("Windows 11") || os.contains("Windows 10")) {
+
                 java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-                setBounds((screenSize.width-771)/2, (screenSize.height-590)/2, 771, 590);
-                
+                setBounds((screenSize.width - 771) / 2, (screenSize.height - 590) / 2, 771, 590);
             }
-            
-            
-            
-            this.setTitle("OWASP DirBuster " + Config.version + " - Web Application Brute Forcing 汉化 by shaoyu");
+
+
+            this.setTitle("OWASP DirBuster 目录穷举器" + Config.version + " - Web Application Brute Forcing 汉化 by shaoyu");
             jPanelSetup = new JPanelSetup(this);
             jPanelRunning = new JPanelRunning(this);
             jPanelReport = new JPanelReport(this);
             getContentPane().add(jPanelSetup, java.awt.BorderLayout.CENTER);
-            
+
             setIconImage(ImageCreator.OWASP_IMAGE.getImage());
             manager = Manager.getInstance();
             manager.setGUI(this);
@@ -110,20 +98,20 @@ public class StartGUI extends javax.swing.JFrame
             jCheckBoxMenuDebug.setSelected(Config.debug);
             jCheckBoxMenuParseHTML.setSelected(Config.parseHTML);
             jCheckBoxMenuItemCaseInsensativeMode.setSelected(Config.caseInsensativeMode);
-            
+
             /*
              * populate the setting with the values from user prefs
              */
             jPanelSetup.jTextFieldFile.setText(manager.getDefaultList());
             jPanelSetup.jTextFieldFileExtention.setText(manager.getDefaultExts());
             jPanelSetup.jSliderThreads.setValue(manager.getDefaultNoThreads());
-            jPanelSetup.jLabelThreadsDisplay.setText(manager.getDefaultNoThreads() + " Threads");
+            jPanelSetup.jLabelThreadsDisplay.setText(manager.getDefaultNoThreads() + " 条线程");
 
             /*
              * load the help
              */
             loadHelp();
-            
+
             /*
              * check for an update
              */
@@ -133,32 +121,18 @@ public class StartGUI extends javax.swing.JFrame
              * load the look and feel menus
              */
             createLookAndFeelMenus();
-            
-            
 
-        }
-        catch (ClassNotFoundException ex)
-        {
-            Logger.getLogger(StartGUI.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        catch (InstantiationException ex)
-        {
-            Logger.getLogger(StartGUI.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        catch (IllegalAccessException ex)
-        {
-            Logger.getLogger(StartGUI.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        catch (UnsupportedLookAndFeelException ex)
-        {
-            Logger.getLogger(StartGUI.class.getName()).log(Level.SEVERE, null, ex);
-        }
 
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException |
+                 UnsupportedLookAndFeelException ex) {
+            Logger.getLogger(StartGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
 
     }
 
-    /** This method is called from within the constructor to
+    /**
+     * This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
      * always regenerated by the Form Editor.
@@ -227,7 +201,7 @@ public class StartGUI extends javax.swing.JFrame
 
         jMenuFile1.setText("File");
 
-        jMenuItemNew.setIcon(new javax.swing.ImageIcon(getClass().getResource("./").getPath()+"icons/window-new.png")); // NOI18N
+        jMenuItemNew.setIcon(new javax.swing.ImageIcon(getClass().getResource("./").getPath() + "icons/window-new.png")); // NOI18N
         jMenuItemNew.setText("New");
         jMenuItemNew.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -236,7 +210,7 @@ public class StartGUI extends javax.swing.JFrame
         });
         jMenuFile1.add(jMenuItemNew);
 
-        jMenuItemExit.setIcon(new javax.swing.ImageIcon(getClass().getResource("./").getPath()+"icons/door_out.png")); // NOI18N
+        jMenuItemExit.setIcon(new javax.swing.ImageIcon(getClass().getResource("./").getPath() + "icons/door_out.png")); // NOI18N
         jMenuItemExit.setText("Exit");
         jMenuItemExit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -287,7 +261,7 @@ public class StartGUI extends javax.swing.JFrame
         jMenuOptions.add(jMenuLookAndFeel);
         jMenuOptions.add(jSeparator2);
 
-        jMenuItemAdvanced.setIcon(new javax.swing.ImageIcon(getClass().getResource("./").getPath()+"icons/preferences-system.png")); // NOI18N
+        jMenuItemAdvanced.setIcon(new javax.swing.ImageIcon(getClass().getResource("./").getPath() + "icons/preferences-system.png")); // NOI18N
         jMenuItemAdvanced.setText("Advanced Options");
         jMenuItemAdvanced.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -300,7 +274,7 @@ public class StartGUI extends javax.swing.JFrame
 
         jMenuAbout1.setText("About");
 
-        jMenuItemLicence.setIcon(new javax.swing.ImageIcon(getClass().getResource("./").getPath()+"icons/information.png")); // NOI18N
+        jMenuItemLicence.setIcon(new javax.swing.ImageIcon(getClass().getResource("./").getPath() + "icons/information.png")); // NOI18N
         jMenuItemLicence.setText("License");
         jMenuItemLicence.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -309,7 +283,7 @@ public class StartGUI extends javax.swing.JFrame
         });
         jMenuAbout1.add(jMenuItemLicence);
 
-        jMenuItemVersion.setIcon(new javax.swing.ImageIcon(getClass().getResource("./").getPath()+"icons/information.png")); // NOI18N
+        jMenuItemVersion.setIcon(new javax.swing.ImageIcon(getClass().getResource("./").getPath() + "icons/information.png")); // NOI18N
         jMenuItemVersion.setText("Version");
         jMenuItemVersion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -322,7 +296,7 @@ public class StartGUI extends javax.swing.JFrame
 
         jMenuHelp1.setText("Help");
 
-        jMenuItemHelp.setIcon(new javax.swing.ImageIcon(getClass().getResource("./").getPath()+"icons/help.png")); // NOI18N
+        jMenuItemHelp.setIcon(new javax.swing.ImageIcon(getClass().getResource("./").getPath() + "icons/help.png")); // NOI18N
         jMenuItemHelp.setText("Help");
         jMenuItemHelp.setEnabled(false);
         jMenuHelp1.add(jMenuItemHelp);
@@ -331,7 +305,7 @@ public class StartGUI extends javax.swing.JFrame
         jMenuItemFAQ.setEnabled(false);
         jMenuHelp1.add(jMenuItemFAQ);
 
-        jMenuItemhome.setIcon(new javax.swing.ImageIcon(getClass().getResource("./").getPath()+"icons/internet-web-browser.png")); // NOI18N
+        jMenuItemhome.setIcon(new javax.swing.ImageIcon(getClass().getResource("./").getPath() + "icons/internet-web-browser.png")); // NOI18N
         jMenuItemhome.setText("Home Page");
         jMenuItemhome.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -349,7 +323,7 @@ public class StartGUI extends javax.swing.JFrame
         jMenuHelp1.add(jMenuItemCheck);
         jMenuHelp1.add(jSeparator1);
 
-        jMenuItemReport.setIcon(new javax.swing.ImageIcon(getClass().getResource("./").getPath()+"icons/bug.png")); // NOI18N
+        jMenuItemReport.setIcon(new javax.swing.ImageIcon(getClass().getResource("./").getPath() + "icons/bug.png")); // NOI18N
         jMenuItemReport.setText("Report a bug");
         jMenuItemReport.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -363,8 +337,9 @@ public class StartGUI extends javax.swing.JFrame
         setJMenuBar(jMenuBar);
 
         java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-        setBounds((screenSize.width-771)/2, (screenSize.height-547)/2, 771, 547);
+        setBounds((screenSize.width - 771) / 2, (screenSize.height - 547) / 2, 771, 547);
     }// </editor-fold>//GEN-END:initComponents
+
     private void jCheckBoxMenuParseHTMLActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jCheckBoxMenuParseHTMLActionPerformed
     {//GEN-HEADEREND:event_jCheckBoxMenuParseHTMLActionPerformed
         Config.parseHTML = jCheckBoxMenuParseHTML.isSelected();
@@ -372,13 +347,10 @@ public class StartGUI extends javax.swing.JFrame
 
     private void jMenuItemReportActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuItemReportActionPerformed
     {//GEN-HEADEREND:event_jMenuItemReportActionPerformed
-        try
-        {
+        try {
             BrowserLauncher launcher = new BrowserLauncher(null);
             launcher.openURLinBrowser("https://sourceforge.net/tracker/?func=add&group_id=199126&atid=968238");
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }//GEN-LAST:event_jMenuItemReportActionPerformed
@@ -395,24 +367,18 @@ public class StartGUI extends javax.swing.JFrame
 
     private void jCheckBoxMenuDebugActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jCheckBoxMenuDebugActionPerformed
     {//GEN-HEADEREND:event_jCheckBoxMenuDebugActionPerformed
-        if (jCheckBoxMenuDebug.isSelected())
-        {
+        if (jCheckBoxMenuDebug.isSelected()) {
             Config.debug = true;
-        }
-        else
-        {
+        } else {
             Config.debug = false;
         }
     }//GEN-LAST:event_jCheckBoxMenuDebugActionPerformed
 
     private void jCheckBoxMenuFollowRediretsActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jCheckBoxMenuFollowRediretsActionPerformed
     {//GEN-HEADEREND:event_jCheckBoxMenuFollowRediretsActionPerformed
-        if (jCheckBoxMenuFollowRedirets.isSelected())
-        {
+        if (jCheckBoxMenuFollowRedirets.isSelected()) {
             Config.followRedirects = true;
-        }
-        else
-        {
+        } else {
             Config.followRedirects = false;
         }
     }//GEN-LAST:event_jCheckBoxMenuFollowRediretsActionPerformed
@@ -424,14 +390,9 @@ public class StartGUI extends javax.swing.JFrame
 
     private void jMenuItemNewActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuItemNewActionPerformed
     {//GEN-HEADEREND:event_jMenuItemNewActionPerformed
-        int n = JOptionPane.showConfirmDialog(
-                this,
-                "Are you sure you wish to cancel the current test and start a new one?",
-                "Are you sure?",
-                JOptionPane.YES_NO_OPTION);
+        int n = JOptionPane.showConfirmDialog(this, "Are you sure you wish to cancel the current test and start a new one?", "Are you sure?", JOptionPane.YES_NO_OPTION);
         //if the anwser is yes
-        if (n == 0)
-        {
+        if (n == 0) {
             manager.youAreFinished();
             showSetup();
             jPanelRunning.resultsTableModel.clearData();
@@ -442,13 +403,7 @@ public class StartGUI extends javax.swing.JFrame
     private void jMenuItemVersionActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuItemVersionActionPerformed
     {//GEN-HEADEREND:event_jMenuItemVersionActionPerformed
         //new JDialogVersion(new javax.swing.JFrame(), true).setVisible(true);
-        String versionText = "DirBuster " + Config.version + "\n\n" +
-                Config.versionDate + "\n" +
-                "Written by: James Fisher\n" +
-                "Help supplied by: John Anderson (john@ev6.net)\n" +
-                "\n" +
-                "Contact: DirBuster@sittinglittleduck.com\n" +
-                "Home: http://www.owasp.org/index.php/Category:OWASP_DirBuster_Project";
+        String versionText = "DirBuster " + Config.version + "\n\n" + Config.versionDate + "\n" + "Written by: James Fisher\n" + "Help supplied by: John Anderson (john@ev6.net)\n" + "\n" + "Contact: DirBuster@sittinglittleduck.com\n" + "Home: http://www.owasp.org/index.php/Category:OWASP_DirBuster_Project";
 
 
         JOptionPane.showMessageDialog(this, versionText, "About DirBuster-" + Config.version, 1, ImageCreator.OWASP_IMAGE);
@@ -456,13 +411,10 @@ public class StartGUI extends javax.swing.JFrame
 
     private void jMenuItemhomeActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuItemhomeActionPerformed
     {//GEN-HEADEREND:event_jMenuItemhomeActionPerformed
-        try
-        {
+        try {
             BrowserLauncher launcher = new BrowserLauncher(null);
             launcher.openURLinBrowser("http://www.owasp.org/index.php/Category:OWASP_DirBuster_Project");
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }//GEN-LAST:event_jMenuItemhomeActionPerformed
@@ -474,12 +426,9 @@ public class StartGUI extends javax.swing.JFrame
 
     private void jCheckBoxMenuItemCaseInsensativeModeActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jCheckBoxMenuItemCaseInsensativeModeActionPerformed
     {//GEN-HEADEREND:event_jCheckBoxMenuItemCaseInsensativeModeActionPerformed
-        if (jCheckBoxMenuItemCaseInsensativeMode.isSelected())
-        {
+        if (jCheckBoxMenuItemCaseInsensativeMode.isSelected()) {
             Config.caseInsensativeMode = true;
-        }
-        else
-        {
+        } else {
             Config.caseInsensativeMode = false;
         }
     }//GEN-LAST:event_jCheckBoxMenuItemCaseInsensativeModeActionPerformed
@@ -491,16 +440,14 @@ public class StartGUI extends javax.swing.JFrame
     JFrameHelp helpFrame = new JFrameHelp(help);
     helpFrame.setVisible(true);
      */
+
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[])
-    {
-        java.awt.EventQueue.invokeLater(new Runnable()
-        {
+    public static void main(String args[]) {
+        java.awt.EventQueue.invokeLater(new Runnable() {
 
-            public void run()
-            {
+            public void run() {
                 new StartGUI().setVisible(true);
 
 
@@ -508,8 +455,7 @@ public class StartGUI extends javax.swing.JFrame
         });
     }
 
-    public void showSetup()
-    {
+    public void showSetup() {
         getContentPane().remove(jPanelRunning);
         getContentPane().remove(jPanelReport);
         getContentPane().add(jPanelSetup, java.awt.BorderLayout.CENTER);
@@ -518,8 +464,7 @@ public class StartGUI extends javax.swing.JFrame
         this.repaint();
     }
 
-    public void showRunning()
-    {
+    public void showRunning() {
         getContentPane().remove(jPanelSetup);
         getContentPane().remove(jPanelReport);
         getContentPane().add(jPanelRunning, java.awt.BorderLayout.CENTER);
@@ -528,8 +473,7 @@ public class StartGUI extends javax.swing.JFrame
         this.repaint();
     }
 
-    public void showReporting()
-    {
+    public void showReporting() {
         getContentPane().remove(jPanelSetup);
         getContentPane().remove(jPanelRunning);
         getContentPane().add(jPanelReport, java.awt.BorderLayout.CENTER);
@@ -546,8 +490,7 @@ public class StartGUI extends javax.swing.JFrame
     }
      */
 
-    public void updateProgress(String current, String average, String total, int numberOfThreads, String timeLeft, String parseQueueLength)
-    {
+    public void updateProgress(String current, String average, String total, int numberOfThreads, String timeLeft, String parseQueueLength) {
         jPanelRunning.setCurrentSpeed(current);
         jPanelRunning.setAverageSpeed(average);
         jPanelRunning.setTotalRequests(total);
@@ -557,61 +500,41 @@ public class StartGUI extends javax.swing.JFrame
 
     }
 
-    public void pause()
-    {
-        if (manager != null)
-        {
+    public void pause() {
+        if (manager != null) {
             manager.pause();
         }
     }
 
-    public void unPause()
-    {
-        if (manager != null)
-        {
+    public void unPause() {
+        if (manager != null) {
             manager.unPause();
         }
     }
 
-    public void setStatus(String status)
-    {
-        
+    public void setStatus(String status) {
+
         jLabelStatus.setText(status);
     }
 
-    public void startBruteForceFile(String dirToStartWith,
-            String fileToRead,
-            String protocol,
-            String host,
-            int port,
-            String fileExtention,
-            int threadsNumber,
-            boolean doDirs,
-            boolean doFiles,
-            boolean recursive,
-            boolean auto,
-            boolean useBlankExt,
-            Vector extToUse)
-    {
+    public void startBruteForceFile(String dirToStartWith, String fileToRead, String protocol, String host, int port, String fileExtention, int threadsNumber, boolean doDirs, boolean doFiles, boolean recursive, boolean auto, boolean useBlankExt, Vector extToUse) {
         manager.setupManager(dirToStartWith, fileToRead, protocol, host, port, fileExtention, this, threadsNumber, doDirs, doFiles, recursive, useBlankExt, extToUse);
         jPanelRunning.resultsTableModel.setManager(manager);
         manager.setAuto(auto);
         manager.start();
     }
 
-    public void startBruteForcePure(String dirToStartWith, String[] charSet, int minLen, int maxLen, String protocol, String host, int port, String fileExtention, int threadsNumber, boolean doDirs, boolean doFiles, boolean recursive, boolean auto, boolean useBlankExt, Vector extToUse)
-    {
+    public void startBruteForcePure(String dirToStartWith, String[] charSet, int minLen, int maxLen, String protocol, String host, int port, String fileExtention, int threadsNumber, boolean doDirs, boolean doFiles, boolean recursive, boolean auto, boolean useBlankExt, Vector extToUse) {
         manager.setupManager(dirToStartWith, charSet, minLen, maxLen, protocol, host, port, fileExtention, this, threadsNumber, doDirs, doFiles, recursive, useBlankExt, extToUse);
         jPanelRunning.resultsTableModel.setManager(manager);
         manager.setAuto(auto);
         manager.start();
     }
-    
+
     /*
      * start bruteforce fuzzing
      */
-    public void startBruteForceFuzz(String[] charSet, int minLen, int maxLen, String protocol, String host, int port, int threadsNumber, boolean auto, String urlFuzzStart, String urlFuzzEnd)
-    {
+    public void startBruteForceFuzz(String[] charSet, int minLen, int maxLen, String protocol, String host, int port, int threadsNumber, boolean auto, String urlFuzzStart, String urlFuzzEnd) {
         manager.setUpManager(charSet, minLen, maxLen, protocol, host, port, this, threadsNumber, urlFuzzStart, urlFuzzEnd);
         jPanelRunning.resultsTableModel.setManager(manager);
         manager.setAuto(auto);
@@ -628,36 +551,24 @@ public class StartGUI extends javax.swing.JFrame
     String urlFuzzStart,
     String urlFuzzEnd)
      */
-    public void startListBasedFuzz(String inputFile,
-            String protocol,
-            String host,
-            int port,
-            int threadNumber,
-            String urlFuzzStart,
-            String urlFuzzEnd,
-            boolean auto)
-    {
+    public void startListBasedFuzz(String inputFile, String protocol, String host, int port, int threadNumber, String urlFuzzStart, String urlFuzzEnd, boolean auto) {
         manager.setUpManager(inputFile, protocol, host, port, this, threadNumber, urlFuzzStart, urlFuzzEnd);
         jPanelRunning.resultsTableModel.setManager(manager);
         manager.setAuto(auto);
         manager.start();
     }
 
-    public void finished()
-    {
+    public void finished() {
         manager.youAreFinished();
     }
 
-    public void enableReport()
-    {
+    public void enableReport() {
         jPanelRunning.enableReport();
     }
 
-    private void loadHelp()
-    {
-        try
-        {
-            URL url =new URL(this.getClass().getResource("../")+"help/help.hs");
+    private void loadHelp() {
+        try {
+            URL url = new URL(this.getClass().getResource("../") + "help/help.hs");
             ClassLoader loader = this.getClass().getClassLoader();
             hs = new HelpSet(loader, url);
             hs.setTitle("DirBuster Help Viewer");
@@ -673,104 +584,77 @@ public class StartGUI extends javax.swing.JFrame
              */
 
 
-        }
-        catch (HelpSetException ex)
-        {
+        } catch (HelpSetException ex) {
             Logger.getLogger(StartGUI.class.getName()).log(Level.SEVERE, null, ex);
         } catch (MalformedURLException e) {
             throw new RuntimeException(e);
         }
     }
-    
+
     /*
      * used to check for an update
      */
-    private void checkForUpdate()
-    {
-        
+    private void checkForUpdate() {
+
         /*
          * get the date now
          */
         manager.checkForUpdates(false);
     }
-    
-    public void setURL(String URL)
-    {
+
+    public void setURL(String URL) {
         jPanelSetup.jTextFieldTarget.setText(URL);
     }
 
-    private void createLookAndFeelMenus()
-    {
-       Vector<UIManager.LookAndFeelInfo> lookAndFeels = new Vector<UIManager.LookAndFeelInfo>(10,10);
-       UIManager.LookAndFeelInfo[] installedFeels = UIManager.getInstalledLookAndFeels();
-       
+    private void createLookAndFeelMenus() {
+        Vector<UIManager.LookAndFeelInfo> lookAndFeels = new Vector<UIManager.LookAndFeelInfo>(10, 10);
+        UIManager.LookAndFeelInfo[] installedFeels = UIManager.getInstalledLookAndFeels();
 
-       lookAndFeels.addElement(new UIManager.LookAndFeelInfo(UIManager.getLookAndFeel().getName(), UIManager.getLookAndFeel().getClass().getName()));
 
-       for(int i = 0; i < Math.min(installedFeels.length, 10); i++)
-       {
-           lookAndFeels.addElement(installedFeels[i]);
-       }
+        lookAndFeels.addElement(new UIManager.LookAndFeelInfo(UIManager.getLookAndFeel().getName(), UIManager.getLookAndFeel().getClass().getName()));
 
-       final ButtonGroup group = new ButtonGroup();
+        for (int i = 0; i < Math.min(installedFeels.length, 10); i++) {
+            lookAndFeels.addElement(installedFeels[i]);
+        }
 
-       for (int i = 0; i < lookAndFeels.size(); i++)
-       {
-           final JRadioButtonMenuItem rb = new JRadioButtonMenuItem(lookAndFeels.elementAt(i).getName());
-           group.add(rb);
-           jMenuLookAndFeel.add(rb);
-           rb.setSelected(UIManager.getLookAndFeel().getName().equalsIgnoreCase(lookAndFeels.elementAt(i).getName()));
+        final ButtonGroup group = new ButtonGroup();
 
-           rb.putClientProperty("Look and Feel Name", lookAndFeels.elementAt(i));
+        for (int i = 0; i < lookAndFeels.size(); i++) {
+            final JRadioButtonMenuItem rb = new JRadioButtonMenuItem(lookAndFeels.elementAt(i).getName());
+            group.add(rb);
+            jMenuLookAndFeel.add(rb);
+            rb.setSelected(UIManager.getLookAndFeel().getName().equalsIgnoreCase(lookAndFeels.elementAt(i).getName()));
 
-           rb.addItemListener(new ItemListener()
-           {
-               public void itemStateChanged(final ItemEvent ie)
-               {
-                   final JRadioButtonMenuItem rbi = (JRadioButtonMenuItem) ie.getSource();
-                   if (rbi.isSelected())
-                   {
-                       final UIManager.LookAndFeelInfo info = (UIManager.LookAndFeelInfo) rbi.getClientProperty("Look and Feel Name");
+            rb.putClientProperty("Look and Feel Name", lookAndFeels.elementAt(i));
 
-                       if(info == null)
-                       {
-                           System.out.println("info is null");
-                       }
+            rb.addItemListener(new ItemListener() {
+                public void itemStateChanged(final ItemEvent ie) {
+                    final JRadioButtonMenuItem rbi = (JRadioButtonMenuItem) ie.getSource();
+                    if (rbi.isSelected()) {
+                        final UIManager.LookAndFeelInfo info = (UIManager.LookAndFeelInfo) rbi.getClientProperty("Look and Feel Name");
 
-                       SwingUtilities.invokeLater(new Runnable()
-                       {
-                           public void run()
-                           {
-                                try
-                                {
+                        if (info == null) {
+                            System.out.println("info is null");
+                        }
+
+                        SwingUtilities.invokeLater(new Runnable() {
+                            public void run() {
+                                try {
                                     UIManager.setLookAndFeel(info.getClassName());
                                     SwingUtilities.updateComponentTreeUI(Manager.getInstance().gui.jMenuBar.getParent());
-                                }
-                                catch(ClassNotFoundException ex)
-                                {
+                                } catch (ClassNotFoundException | InstantiationException | IllegalAccessException |
+                                         UnsupportedLookAndFeelException ex) {
                                     Logger.getLogger(StartGUI.class.getName()).log(Level.SEVERE, null, ex);
                                 }
-                                catch(InstantiationException ex)
-                                {
-                                    Logger.getLogger(StartGUI.class.getName()).log(Level.SEVERE, null, ex);
-                                }
-                                catch(IllegalAccessException ex)
-                                {
-                                    Logger.getLogger(StartGUI.class.getName()).log(Level.SEVERE, null, ex);
-                                }
-                                catch(UnsupportedLookAndFeelException ex)
-                                {
-                                    Logger.getLogger(StartGUI.class.getName()).log(Level.SEVERE, null, ex);
-                                }
-                           }
-                       });
-                   }
+                            }
+                        });
+                    }
 
-               }
-           });
-       }
+                }
+            });
+        }
     }
-    
+
     public JPanelSetup jPanelSetup;
     public JPanelRunning jPanelRunning;
     public JPanelReport jPanelReport;

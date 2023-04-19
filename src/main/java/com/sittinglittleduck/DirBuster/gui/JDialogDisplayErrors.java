@@ -33,7 +33,7 @@ public class JDialogDisplayErrors extends javax.swing.JDialog
     {
         super(parent, modal);
         initComponents();
-        this.setTitle("DirBuster " + Config.version + " - You have Errors!");
+        this.setTitle("DirBuster " + Config.version + " - 设置有一些错误!");
         this.errors = errors;
         jListErrors.setListData(this.errors);
         
@@ -59,6 +59,7 @@ public class JDialogDisplayErrors extends javax.swing.JDialog
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel2.setText("The following errors have been detected, you must correct these before brute forcing can start");
+        jLabel2.setText("找到以下错误，要开始扫描，请先修复如下错误");
 
         jListErrors.setBackground(new java.awt.Color(224, 223, 227));
         jListErrors.setFont(new java.awt.Font("Dialog", 1, 11));

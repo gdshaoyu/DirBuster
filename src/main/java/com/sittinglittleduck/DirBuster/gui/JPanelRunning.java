@@ -349,7 +349,7 @@ public class JPanelRunning extends javax.swing.JPanel implements ClipboardOwner
         jPanelScanInfoBase.setLayout(new javax.swing.BoxLayout(jPanelScanInfoBase, javax.swing.BoxLayout.Y_AXIS));
         jScrollPaneScanInformation.setViewportView(jPanelScanInfoBase);
 
-        jTabbedPaneViewResults.addTab("Scan Information", new javax.swing.ImageIcon(getClass().getResource("./").getPath()+"icons/information.png"), jScrollPaneScanInformation); // NOI18N
+        jTabbedPaneViewResults.addTab("扫描信息", new javax.swing.ImageIcon(getClass().getResource("./").getPath()+"icons/information.png"), jScrollPaneScanInformation); // NOI18N
 
         jTableResults.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         resultsTableModel = new ResultsTableModel();
