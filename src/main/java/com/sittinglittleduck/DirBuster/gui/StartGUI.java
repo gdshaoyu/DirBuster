@@ -170,7 +170,7 @@ public class StartGUI extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        setFont(new java.awt.Font("Arial", 0, 12));
+        setFont(new java.awt.Font("微软雅黑", 0, 12));
 
         jPanelStatus.setLayout(new java.awt.GridBagLayout());
 
@@ -199,10 +199,10 @@ public class StartGUI extends javax.swing.JFrame {
 
         jMenuBar.setFont(new java.awt.Font("Arial", 1, 12));
 
-        jMenuFile1.setText("File");
+        jMenuFile1.setText("文件");
 
         jMenuItemNew.setIcon(new javax.swing.ImageIcon(getClass().getResource("./").getPath() + "icons/window-new.png")); // NOI18N
-        jMenuItemNew.setText("New");
+        jMenuItemNew.setText("新建");
         jMenuItemNew.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItemNewActionPerformed(evt);
@@ -211,7 +211,7 @@ public class StartGUI extends javax.swing.JFrame {
         jMenuFile1.add(jMenuItemNew);
 
         jMenuItemExit.setIcon(new javax.swing.ImageIcon(getClass().getResource("./").getPath() + "icons/door_out.png")); // NOI18N
-        jMenuItemExit.setText("Exit");
+        jMenuItemExit.setText("退出");
         jMenuItemExit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItemExitActionPerformed(evt);
@@ -221,9 +221,9 @@ public class StartGUI extends javax.swing.JFrame {
 
         jMenuBar.add(jMenuFile1);
 
-        jMenuOptions.setText("Options");
+        jMenuOptions.setText("选项");
 
-        jCheckBoxMenuFollowRedirets.setText("Follow Redirects");
+        jCheckBoxMenuFollowRedirets.setText("跟随重定向");
         jCheckBoxMenuFollowRedirets.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCheckBoxMenuFollowRediretsActionPerformed(evt);
@@ -231,24 +231,16 @@ public class StartGUI extends javax.swing.JFrame {
         });
         jMenuOptions.add(jCheckBoxMenuFollowRedirets);
 
-        jCheckBoxMenuDebug.setText("Debug Mode");
-        jCheckBoxMenuDebug.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBoxMenuDebugActionPerformed(evt);
-            }
-        });
+        jCheckBoxMenuDebug.setText("Debug模式");
+        jCheckBoxMenuDebug.addActionListener(this::jCheckBoxMenuDebugActionPerformed);
         jMenuOptions.add(jCheckBoxMenuDebug);
 
-        jCheckBoxMenuItemCaseInsensativeMode.setText("Case Insensative Mode");
+        jCheckBoxMenuItemCaseInsensativeMode.setText("不区分大小写");
         jCheckBoxMenuItemCaseInsensativeMode.setEnabled(false);
-        jCheckBoxMenuItemCaseInsensativeMode.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBoxMenuItemCaseInsensativeModeActionPerformed(evt);
-            }
-        });
+        jCheckBoxMenuItemCaseInsensativeMode.addActionListener(this::jCheckBoxMenuItemCaseInsensativeModeActionPerformed);
         jMenuOptions.add(jCheckBoxMenuItemCaseInsensativeMode);
 
-        jCheckBoxMenuParseHTML.setText("Parse HTML");
+        jCheckBoxMenuParseHTML.setText("分析html");
         jCheckBoxMenuParseHTML.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCheckBoxMenuParseHTMLActionPerformed(evt);
@@ -257,12 +249,12 @@ public class StartGUI extends javax.swing.JFrame {
         jMenuOptions.add(jCheckBoxMenuParseHTML);
         jMenuOptions.add(jSeparator3);
 
-        jMenuLookAndFeel.setText("Look & Feel");
+        jMenuLookAndFeel.setText("主题");
         jMenuOptions.add(jMenuLookAndFeel);
         jMenuOptions.add(jSeparator2);
 
         jMenuItemAdvanced.setIcon(new javax.swing.ImageIcon(getClass().getResource("./").getPath() + "icons/preferences-system.png")); // NOI18N
-        jMenuItemAdvanced.setText("Advanced Options");
+        jMenuItemAdvanced.setText("高级选项");
         jMenuItemAdvanced.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItemAdvancedActionPerformed(evt);
@@ -272,10 +264,10 @@ public class StartGUI extends javax.swing.JFrame {
 
         jMenuBar.add(jMenuOptions);
 
-        jMenuAbout1.setText("About");
+        jMenuAbout1.setText("关于");
 
         jMenuItemLicence.setIcon(new javax.swing.ImageIcon(getClass().getResource("./").getPath() + "icons/information.png")); // NOI18N
-        jMenuItemLicence.setText("License");
+        jMenuItemLicence.setText("许可");
         jMenuItemLicence.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItemLicenceActionPerformed(evt);
@@ -284,7 +276,7 @@ public class StartGUI extends javax.swing.JFrame {
         jMenuAbout1.add(jMenuItemLicence);
 
         jMenuItemVersion.setIcon(new javax.swing.ImageIcon(getClass().getResource("./").getPath() + "icons/information.png")); // NOI18N
-        jMenuItemVersion.setText("Version");
+        jMenuItemVersion.setText("版本");
         jMenuItemVersion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItemVersionActionPerformed(evt);
@@ -294,14 +286,14 @@ public class StartGUI extends javax.swing.JFrame {
 
         jMenuBar.add(jMenuAbout1);
 
-        jMenuHelp1.setText("Help");
+        jMenuHelp1.setText("帮助");
 
         jMenuItemHelp.setIcon(new javax.swing.ImageIcon(getClass().getResource("./").getPath() + "icons/help.png")); // NOI18N
-        jMenuItemHelp.setText("Help");
-        jMenuItemHelp.setEnabled(false);
+        jMenuItemHelp.setText("帮助");
+        jMenuItemHelp.setEnabled(true);
         jMenuHelp1.add(jMenuItemHelp);
 
-        jMenuItemFAQ.setText("FAQ");
+        jMenuItemFAQ.setText("疑问与解答");
         jMenuItemFAQ.setEnabled(false);
         jMenuHelp1.add(jMenuItemFAQ);
 
@@ -314,7 +306,7 @@ public class StartGUI extends javax.swing.JFrame {
         });
         jMenuHelp1.add(jMenuItemhome);
 
-        jMenuItemCheck.setText("Check for updates");
+        jMenuItemCheck.setText("检查更新");
         jMenuItemCheck.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItemCheckActionPerformed(evt);
@@ -324,7 +316,7 @@ public class StartGUI extends javax.swing.JFrame {
         jMenuHelp1.add(jSeparator1);
 
         jMenuItemReport.setIcon(new javax.swing.ImageIcon(getClass().getResource("./").getPath() + "icons/bug.png")); // NOI18N
-        jMenuItemReport.setText("Report a bug");
+        jMenuItemReport.setText("报告错误");
         jMenuItemReport.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItemReportActionPerformed(evt);
@@ -390,7 +382,7 @@ public class StartGUI extends javax.swing.JFrame {
 
     private void jMenuItemNewActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuItemNewActionPerformed
     {//GEN-HEADEREND:event_jMenuItemNewActionPerformed
-        int n = JOptionPane.showConfirmDialog(this, "Are you sure you wish to cancel the current test and start a new one?", "Are you sure?", JOptionPane.YES_NO_OPTION);
+        int n = JOptionPane.showConfirmDialog(this, "确定要取消当前测试，开新界面吗?", "确定吗?", JOptionPane.YES_NO_OPTION);
         //if the anwser is yes
         if (n == 0) {
             manager.youAreFinished();
@@ -403,7 +395,7 @@ public class StartGUI extends javax.swing.JFrame {
     private void jMenuItemVersionActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuItemVersionActionPerformed
     {//GEN-HEADEREND:event_jMenuItemVersionActionPerformed
         //new JDialogVersion(new javax.swing.JFrame(), true).setVisible(true);
-        String versionText = "DirBuster " + Config.version + "\n\n" + Config.versionDate + "\n" + "Written by: James Fisher\n" + "Help supplied by: John Anderson (john@ev6.net)\n" + "\n" + "Contact: DirBuster@sittinglittleduck.com\n" + "Home: http://www.owasp.org/index.php/Category:OWASP_DirBuster_Project";
+        String versionText = "DirBuster " + Config.version + "\n\n" + Config.versionDate + "\n" + "Written by: James Fisher\n" + "Help supplied by: John Anderson (john@ev6.net)\n" + "\n" + "Contact: DirBuster@sittinglittleduck.com\n" + "Home: http://www.owasp.org/index.php/Category:OWASP_DirBuster_Project\n"+"汉化 by shaoyu 2023";
 
 
         JOptionPane.showMessageDialog(this, versionText, "About DirBuster-" + Config.version, 1, ImageCreator.OWASP_IMAGE);

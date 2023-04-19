@@ -1,6 +1,6 @@
 /*
  * Start.java
- * 
+ *
  * Copyright 2008 James Fisher
  *
  * This library is free software; you can redistribute it and/or
@@ -22,6 +22,7 @@ package com.sittinglittleduck.DirBuster;
 import com.sittinglittleduck.DirBuster.gui.StartGUI;
 import com.sittinglittleduck.DirBuster.headless.CatchExit;
 import gnu.getopt.Getopt;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -31,17 +32,14 @@ import java.util.StringTokenizer;
 import java.util.Vector;
 
 /**
- *
  * @author james
  */
-public class Start
-{
+public class Start {
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
 
         URL target = null;
 
@@ -53,24 +51,13 @@ public class Start
         /*
          * if no arguments are passed just start the GUI
          */
-        if(args.length == 0)
-        {
-            java.awt.EventQueue.invokeLater(new Runnable()
-            {
-
-                public void run()
-                {
-                    new StartGUI().setVisible(true);
-
-
-                }
-            });
+        if (args.length == 0) {
+            java.awt.EventQueue.invokeLater(() -> new StartGUI().setVisible(true));
         }
         /*
          * if command line arguments have been passed
          */
-        else
-        {
+        else {
             /*
              * Default Values
              */
@@ -88,15 +75,11 @@ public class Start
             boolean recursive = true;
 
 
-
-
             Getopt opt = new Getopt("DirBuster", args, "s:l:e:t:u:g:r:vfhHPR");
             int c, nErr;
             String arg;
-            while((c = opt.getopt()) != -1)
-            {
-                switch(c)
-                {
+            while ((c = opt.getopt()) != -1) {
+                switch (c) {
                     /*
                      * Display the help
                      */
@@ -110,20 +93,16 @@ public class Start
                      */
                     case 'u':
                         arg = opt.getOptarg();
-                        try
-                        {
+                        try {
                             URL targetURL = new URL(arg);
                             manager.setTargetURL(targetURL);
                             protocol = targetURL.getProtocol();
                             host = targetURL.getHost();
                             port = targetURL.getPort();
-                            if(port == -1)
-                            {
+                            if (port == -1) {
                                 port = targetURL.getDefaultPort();
                             }
-                        }
-                        catch(MalformedURLException ex)
-                        {
+                        } catch (MalformedURLException ex) {
                             System.err.println("ERROR: Your target is not a valid URL");
                             System.exit(1);
                         }
@@ -145,15 +124,11 @@ public class Start
                     case 'l':
 
                         fileToRead = opt.getOptarg();
-                        if(fileToRead != null && !fileToRead.equalsIgnoreCase(""))
-                        {
-                            try
-                            {
+                        if (fileToRead != null && !fileToRead.equalsIgnoreCase("")) {
+                            try {
                                 FileInputStream test = new FileInputStream(new File(fileToRead));
                                 manager.setFileLocation(fileToRead);
-                            }
-                            catch(FileNotFoundException e)
-                            {
+                            } catch (FileNotFoundException e) {
                                 System.err.println("ERROR: Sorry can't open the file with the directory list in.");
                                 System.exit(1);
                             }
@@ -175,12 +150,9 @@ public class Start
                     case 't':
                         arg = opt.getOptarg();
 
-                        try
-                        {
+                        try {
                             threads = Integer.parseInt(arg);
-                        }
-                        catch(NumberFormatException e)
-                        {
+                        } catch (NumberFormatException e) {
                             System.out.println("ERROR: number of threads is a not a number");
                             System.exit(1);
                         }
@@ -255,26 +227,23 @@ public class Start
             /*
              * Set Headless mode if we have to
              */
-            if(headless)
-            {
+            if (headless) {
 
-                if(host.equals(""))
-                {
+                if (host.equals("")) {
                     System.err.println("ERROR: no target url set, please set with -u <url>");
                     System.exit(1);
                 }
 
                 manager.setHeadLessMode(true);
-                
-                
+
+
                 Vector extsVector = new Vector(10, 10);
 
                 /*
                  * split up the exts
                  */
                 StringTokenizer st = new StringTokenizer(exts, ",", false);
-                while(st.hasMoreTokens())
-                {
+                while (st.hasMoreTokens()) {
 
                     //System.out.println("ext = " + st.nextToken().trim());
                     extsVector.addElement(new ExtToCheck(st.nextToken().trim(), true));
@@ -313,8 +282,7 @@ public class Start
                 /*
                  * if the report location is the default
                  */
-                if(reportLocation == null)
-                {
+                if (reportLocation == null) {
                     reportLocation = System.getProperty("user.dir") + File.separatorChar + "DirBuster-Report-" + manager.getHost() + "-" + manager.getPort() + ".txt";
                     manager.setReportLocation(reportLocation);
                 }
@@ -322,14 +290,11 @@ public class Start
                 /*
                  * does the file we ar about to write to already exist?
                  */
-                try
-                {
+                try {
                     FileInputStream test = new FileInputStream(new File(reportLocation));
                     System.err.println("ERROR: Unable to write to report location, file already exists");
                     System.exit(1);
-                }
-                catch(FileNotFoundException e)
-                {
+                } catch (FileNotFoundException e) {
                     /*
                      * do nothing as the file is not already there.
                      */
@@ -344,74 +309,58 @@ public class Start
                 manager.start();
 
 
+            } else {
+                java.awt.EventQueue.invokeLater(() -> {
+                    Manager manager1 = Manager.getInstance();
+                    StartGUI gui = new StartGUI();
 
-            }
-            else
-            {
-                java.awt.EventQueue.invokeLater(new Runnable()
-                {
-
-                    public void run()
-                    {
-                        Manager manager = Manager.getInstance();
-                        StartGUI gui = new StartGUI();
-
-                        /*
-                         * set the target
-                         */
-                        if(manager.getTargetURL() != null)
-                        {
-                            gui.jPanelSetup.jTextFieldTarget.setText(manager.getTargetURL().toString());
-                        }
-
-                        /*
-                         * set the file location
-                         */
-                        if(manager.getFileLocation() != null)
-                        {
-                            gui.jPanelSetup.jTextFieldFile.setText(manager.getFileLocation());
-                        }
-
-                        /*
-                         * set the report location
-                         */
-                        if(manager.getReportLocation() != null)
-                        {
-                            gui.jPanelReport.jTextFieldReportLocation.setText(manager.getReportLocation());
-                        }
-
-
-                        /*
-                         * set the file extention
-                         */
-                        if(manager.getFileExtentions() != null)
-                        {
-                            gui.jPanelSetup.jTextFieldFileExtention.setText(manager.getFileExtentions());
-                        }
-
-                        /*
-                         * point to start the scan from
-                         */
-                        if(manager.getPointToStartFrom() != null)
-                        {
-                            gui.jPanelSetup.jTextFieldDirToStart.setText(manager.getPointToStartFrom());
-                        }
-
-                        gui.setVisible(true);
-
-
-
+                    /*
+                     * set the target
+                     */
+                    if (manager1.getTargetURL() != null) {
+                        gui.jPanelSetup.jTextFieldTarget.setText(manager1.getTargetURL().toString());
                     }
+
+                    /*
+                     * set the file location
+                     */
+                    if (manager1.getFileLocation() != null) {
+                        gui.jPanelSetup.jTextFieldFile.setText(manager1.getFileLocation());
+                    }
+
+                    /*
+                     * set the report location
+                     */
+                    if (manager1.getReportLocation() != null) {
+                        gui.jPanelReport.jTextFieldReportLocation.setText(manager1.getReportLocation());
+                    }
+
+
+                    /*
+                     * set the file extention
+                     */
+                    if (manager1.getFileExtentions() != null) {
+                        gui.jPanelSetup.jTextFieldFileExtention.setText(manager1.getFileExtentions());
+                    }
+
+                    /*
+                     * point to start the scan from
+                     */
+                    if (manager1.getPointToStartFrom() != null) {
+                        gui.jPanelSetup.jTextFieldDirToStart.setText(manager1.getPointToStartFrom());
+                    }
+
+                    gui.setVisible(true);
+
+
                 });
             }
-
 
 
         }
     }
 
-    public static void printUsage()
-    {
+    public static void printUsage() {
         System.out.println("DirBuster - " + Config.version);
         System.out.println("Usage: java -jar DirBuster-" + Config.version + " -u <URL http://example.com/> [Options]");
         System.out.println("");

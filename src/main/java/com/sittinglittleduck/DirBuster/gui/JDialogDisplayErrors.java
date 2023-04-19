@@ -62,7 +62,7 @@ public class JDialogDisplayErrors extends javax.swing.JDialog
         jLabel2.setText("找到以下错误，要开始扫描，请先修复如下错误");
 
         jListErrors.setBackground(new java.awt.Color(224, 223, 227));
-        jListErrors.setFont(new java.awt.Font("Dialog", 1, 11));
+        jListErrors.setFont(new java.awt.Font("微软雅黑", 0, 11));
         jScrollPane1.setViewportView(jListErrors);
 
         jButtonOK.setText("OK");
